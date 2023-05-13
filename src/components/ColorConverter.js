@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SketchPicker } from 'react-color';
 
-const ColorPicker = () => {
+const ColorPicker = (props) => {
   const [color, setColor] = useState({ r: 0, g: 0, b: 0, a: 1 });
   const [hex, setHex] = useState('#000000');
   const [rgb, setRgb] = useState('rgb(0, 0, 0)');
@@ -31,6 +31,11 @@ const ColorPicker = () => {
       setShowAlert(false);
     }, 2000);
   }
+
+  let myStyle = {
+    color: props.mode === 'dark' ? 'white' : 'black',
+    backgroundColor: props.mode === 'dark' ? '#212529' : 'white'
+}
 
   const convertRgbToCmyk = (r, g, b) => {
     r /= 255;
@@ -74,7 +79,7 @@ const ColorPicker = () => {
   return (
     <div className='container'>
 
-    <h1>Pick a color</h1>
+    <h1 style={{color: props.mode === 'dark' ? 'white' : 'black'}}>Pick a color</h1>
     <div className='container my-2'><div onClick={handleClick}>
         <div style={{ backgroundColor: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`, width: '100px', height: '100px', borderRadius: '10px', border: '1px solid #999', cursor: 'pointer' }} />
       </div>
@@ -86,25 +91,25 @@ const ColorPicker = () => {
       
             
 <div class="input-group flex-nowrap py-1">
-  <span class="input-group-text" id="addon-wrapping">RGB :</span>
-  <input onClick={() => copyToClipboard(rgb)} type="text" value={rgb} class="form-control" placeholder="Select Color" aria-label="Username" aria-describedby="addon-wrapping" />
+  <span class="input-group-text" id="addon-wrapping" style={myStyle}>RGB :</span>
+  <input onClick={() => copyToClipboard(rgb)} type="text" value={rgb} class="form-control" placeholder="Select Color" aria-label="Username" aria-describedby="addon-wrapping" style={myStyle}/>
 </div>
 <div class="input-group flex-nowrap py-1">
-  <span class="input-group-text" id="addon-wrapping">HEX :</span>
-  <input onClick={() => copyToClipboard(hex)} type="text" value={hex} class="form-control" placeholder="Select Color" aria-label="Username" aria-describedby="addon-wrapping" />
+  <span style={myStyle} class="input-group-text" id="addon-wrapping">HEX :</span>
+  <input style={myStyle} onClick={() => copyToClipboard(hex)} type="text" value={hex} class="form-control" placeholder="Select Color" aria-label="Username" aria-describedby="addon-wrapping" />
 </div>
 
 <div class="input-group flex-nowrap py-1">
-  <span class="input-group-text" id="addon-wrapping">HSL :</span>
-  <input onClick={() => copyToClipboard(`hsl(${Math.round(hsl.h)}, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%)`)} type="text" value={`hsl(${Math.round(hsl.h)}, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%)`} class="form-control" placeholder="Select Color" aria-label="Username" aria-describedby="addon-wrapping" />
+  <span style={myStyle} class="input-group-text" id="addon-wrapping">HSL :</span>
+  <input style={myStyle} onClick={() => copyToClipboard(`hsl(${Math.round(hsl.h)}, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%)`)} type="text" value={`hsl(${Math.round(hsl.h)}, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%)`} class="form-control" placeholder="Select Color" aria-label="Username" aria-describedby="addon-wrapping" />
 </div>
 
 <div class="input-group flex-nowrap py-1">
-  <span class="input-group-text" id="addon-wrapping">CMYK :</span>
-  <input onClick={() => copyToClipboard(`cmyk(${cmyk.c}, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`)} type="text" value={`cmyk(${cmyk.c}, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`} class="form-control" placeholder="Select Color" aria-label="Username" aria-describedby="addon-wrapping" />
+  <span style={myStyle} class="input-group-text" id="addon-wrapping">CMYK :</span>
+  <input style={myStyle} onClick={() => copyToClipboard(`cmyk(${cmyk.c}, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`)} type="text" value={`cmyk(${cmyk.c}, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`} class="form-control" placeholder="Select Color" aria-label="Username" aria-describedby="addon-wrapping" />
 </div>
 
-{showAlert && <p class="alert alert-success p-2 text-center" role="alert">
+{showAlert && <p class="alert alert-success mt-2 p-1 text-center" role="alert">
   Copied!
 </p>}
 
