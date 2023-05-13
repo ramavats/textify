@@ -93,7 +93,7 @@ export default function TextForm(props) {
         <h2>Your text summary</h2>
         <div className="alert alert-light p-2" role="alert" style={{backgroundColor: props.mode === 'light' ? 'white' : '#1f2326' , color: props.mode === 'light' ? '#212A3E' : '#DAF5FF' }}><ul>
         <li><strong>{text.trim().length === 0 ? 0 : text.split(' ').length}</strong> words and <strong>{text.length}</strong> characters</li>
-        <li>{0.008 * text.split(' ').length} Minutes read</li></ul></div>
+        <li>{0.008 * text.split(' ').filter((element)=> {return element.length !== 0}).length} Minutes read</li></ul></div>
         
         <h2>Preview</h2>
         <div className="alert alert-primary" role="alert">{text.length > 0 ? text : 'Type something in the textbox to preview it here' }</div>
