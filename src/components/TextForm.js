@@ -49,22 +49,21 @@ export default function TextForm(props) {
       };
       
       const handleExtractURLs = () => {
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        const urlRegex = /((?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,})/gi;
         const urls = text.match(urlRegex);
-        const newString = urls ? urls.join('\n') : 'No URLs found';
+        const newString = urls ? urls.join(', ') : 'No URLs found';
         setText(newString);
       };
+      
       
       const handleCopyText = (event) => {
         const newText = document.getElementById('myBox').value;
         navigator.clipboard.writeText(newText);
-        event.target.innerText = 'Copied';
+        event.target.innerText = 'Copied ✅';
         setTimeout(() => {
           event.target.innerText = 'Copy';
-        }, 3000);
+        }, 1500);
       }
-      
-      
       
     
     const handleOnChange = (event) => {
@@ -75,10 +74,10 @@ export default function TextForm(props) {
   
   return (
 <>
-    <div className='container'>
+    <div className='container' style={{color: props.mode === 'light' ? '#212A3E' : '#9BA4B5' }}>
     <h1>{props.heading}</h1>
     <div className="mb-3">
-    <textarea className='form-control' value={text} onChange={handleOnChange} id='myBox' rows="8"></textarea>
+    <textarea className='form-control' value={text} onChange={handleOnChange} style={{backgroundColor: props.mode === 'light' ? 'white' : '#212A3E', color: props.mode === 'light' ? '#212A3E' : '#9BA4B5' }} id='myBox' rows="8"></textarea>
     </div>
     <button className="btn btn-primary m-1" onClick={handleUpClick}>Convert to Uppercase</button>
     <button className="btn btn-primary m-1" onClick={handleLowClick}>Convert to Lowercase</button>
@@ -90,15 +89,14 @@ export default function TextForm(props) {
     <button className="btn btn-primary m-1" onClick={handleExtractURLs}>Extract URLs</button>
     <button className="btn btn-danger m-1" onClick={handleClearClick}>Clear Text</button>
     </div>
-    <div className="container my-3">
+    <div className="container my-3" style={{color: props.mode === 'light' ? '#212A3E' : '#9BA4B5' }}>
         <h2>Your text summary</h2>
-        <div className="alert alert-light p-3" role="alert"><ul>
-        <li><strong>{text.split(' ').length}</strong> words and <strong>{text.length}</strong> characters</li>
-        <li>{0.008 * text.split(' ').length} Minutes read</li>
-        </ul></div>
+        <div className="alert alert-light p-2" role="alert" style={{backgroundColor: props.mode === 'light' ? 'white' : '#1f2326' , color: props.mode === 'light' ? '#212A3E' : '#DAF5FF' }}><ul>
+        <li><strong>{text.trim().length === 0 ? 0 : text.split(' ').length}</strong> words and <strong>{text.length}</strong> characters</li>
+        <li>{0.008 * text.split(' ').length} Minutes read</li></ul></div>
         
         <h2>Preview</h2>
-        <p className="alert alert-primary" role="alert">{text}</p>
+        <div className="alert alert-primary" role="alert">{text.length > 0 ? text : 'Type something in the textbox to preview it here' }</div>
         <button className='btn btn-success' onClick={handleCopyText}>Copy</button>
     </div>
 
