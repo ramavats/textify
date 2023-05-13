@@ -4,8 +4,10 @@ import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import { useState } from 'react';
+import {  BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
+import About from './components/About';
+import ColorConverter from './components/ColorConverter'
 
-// import About from './components/About';
 
 
 function App() {
@@ -21,12 +23,18 @@ function App() {
     }
   }
   return (
-    <>
-<Navbar title="Textify" aboutText="About" mode={mode} toggleMode={toggleMode} />
-<div className="container my-3">
-{/* <About/> */}
-<TextForm heading="Enter your text below to analyze" mode={mode}/>
-</div>
+ <>
+ <Router>
+  <Navbar title="Textify" aboutText="About" mode={mode} toggleMode={toggleMode} />
+  <div className="container my-3">
+  <Routes>  
+  <Route path='/about' element={<About mode={mode} />} />
+  <Route path='/color-picker' element={<ColorConverter mode={mode} />} />
+  <Route path='/' element={<TextForm heading="Enter your text below to analyze" mode={mode}/>} />
+  </Routes>
+  </div>
+  </Router>
+
 </>
 );
 }
